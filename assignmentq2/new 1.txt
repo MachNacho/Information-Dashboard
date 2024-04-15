@@ -1,0 +1,27 @@
+using System;
+using System.Security.Cryptography;
+using System.Text;
+
+class Program
+{
+    static void Main()
+    {
+        // Generate RSA key pair
+        using (var rsa = new RSACryptoServiceProvider())
+        {
+            // Encrypt
+            string plaintext = "Hello, RSA!";
+            byte[] plaintextBytes = Encoding.UTF8.GetBytes(plaintext);
+            byte[] ciphertextBytes = rsa.Encrypt(plaintextBytes, true);
+
+            // Decrypt
+            byte[] decryptedBytes = rsa.Decrypt(ciphertextBytes, true);
+            string decryptedText = Encoding.UTF8.GetString(decryptedBytes);
+
+            // Display results
+            Console.WriteLine("Plaintext: " + plaintext);
+            Console.WriteLine("Encrypted: " + Convert.ToBase64String(ciphertextBytes));
+            Console.WriteLine("Decrypted: " + decryptedText);
+        }
+    }
+}
